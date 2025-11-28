@@ -1,0 +1,125 @@
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-primary: #5ce1c6;
+  --color-primary-dark: #3bc4aa;
+  --color-secondary: #f5f273;
+  --color-accent: #ff8fab;
+  --color-pink: #ffc6d9;
+  --color-purple: #d0a0ff;
+  --color-text: #1a4d3f;
+  --color-text-dark: #0d2620;
+  --color-text-light: #6B7280;
+  --color-bg-light: #F9FAFB;
+  --border-radius: 50px;
+  --border-radius-md: 30px;
+  --border-radius-sm: 20px;
+  --transition: all 0.3s ease;
+  --font-heading: 'Comfortaa', sans-serif;
+  --font-body: 'Inter', sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--color-text);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  line-height: 1.2;
+}
+
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+@layer utilities {
+  .text-teal {
+    color: #1a4d3f;
+  }
+
+  .bg-teal {
+    background-color: #1a4d3f;
+  }
+
+  .bg-mint {
+    background-color: #5ce1c6;
+  }
+
+  .bg-lemon {
+    background-color: #f5f273;
+  }
+
+  .bg-pink-light {
+    background-color: #ffc6d9;
+  }
+
+  .text-pink-light {
+    color: #ffc6d9;
+  }
+
+  .bg-purple-light {
+    background-color: #d0a0ff;
+  }
+
+  .text-lemon {
+    color: #f5f273;
+  }
+
+  .text-mint {
+    color: #5ce1c6;
+  }
+
+  .text-chunky {
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    line-height: 0.95;
+    text-transform: uppercase;
+  }
+
+  .image-cutout {
+    display: inline-block;
+    border-radius: 25px;
+    overflow: hidden;
+    border: 4px solid #0d2620;
+    box-shadow: 0 8px 0 #0d2620;
+  }
+
+  .btn-chunky {
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    border: 4px solid #0d2620;
+    box-shadow: 0 6px 0 #0d2620;
+    transition: all 0.1s ease;
+  }
+
+  .btn-chunky:hover {
+    transform: translateY(2px);
+    box-shadow: 0 4px 0 #0d2620;
+  }
+
+  .btn-chunky:active {
+    transform: translateY(4px);
+    box-shadow: 0 2px 0 #0d2620;
+  }
+
+  .card-chunky {
+    border: 4px solid #0d2620;
+    box-shadow: 0 8px 0 #0d2620;
+  }
+}
