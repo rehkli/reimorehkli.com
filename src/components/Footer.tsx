@@ -8,8 +8,14 @@ interface FooterProps {
 export default function Footer({ language }: FooterProps) {
   const t = translations[language];
 
-  const navItems = [
+  const navItems = language === 'est' ? [
     { id: 'home', path: '/', label: t.nav.home },
+    { id: 'about', path: '/minust', label: t.nav.about },
+    { id: 'services', path: '/teenused', label: t.nav.services },
+    { id: 'contact', path: '/kontakt', label: t.nav.contact },
+    { id: 'agenda', path: '/agenda', label: t.nav.agenda }
+  ] : [
+    { id: 'home', path: '/home', label: t.nav.home },
     { id: 'about', path: '/about', label: t.nav.about },
     { id: 'services', path: '/services', label: t.nav.services },
     { id: 'contact', path: '/contact', label: t.nav.contact },

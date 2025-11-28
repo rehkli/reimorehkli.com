@@ -13,20 +13,39 @@ export default function Navigation({ language, setLanguage }: NavigationProps) {
   const location = useLocation();
   const t = translations[language];
 
-  const navItems = [
+  const navItems = language === 'est' ? [
     { id: 'home', path: '/', label: t.nav.home },
+    { id: 'about', path: '/minust', label: t.nav.about },
+    { id: 'services', path: '/teenused', label: t.nav.services },
+    { id: 'contact', path: '/kontakt', label: t.nav.contact },
+    { id: 'agenda', path: '/agenda', label: t.nav.agenda }
+  ] : [
+    { id: 'home', path: '/home', label: t.nav.home },
     { id: 'about', path: '/about', label: t.nav.about },
     { id: 'services', path: '/services', label: t.nav.services },
     { id: 'contact', path: '/contact', label: t.nav.contact },
     { id: 'agenda', path: '/agenda', label: t.nav.agenda }
   ];
 
+  const isActivePath = (itemPath: string) => {
+    if (itemPath === '/' || itemPath === '/home') {
+      return location.pathname === '/' || location.pathname === '/avaleht' || location.pathname === '/home';
+    }
+    if (itemPath === '/minust') return location.pathname === '/minust' || location.pathname === '/about';
+    if (itemPath === '/about') return location.pathname === '/about' || location.pathname === '/minust';
+    if (itemPath === '/teenused') return location.pathname === '/teenused' || location.pathname === '/services';
+    if (itemPath === '/services') return location.pathname === '/services' || location.pathname === '/teenused';
+    if (itemPath === '/kontakt') return location.pathname === '/kontakt' || location.pathname === '/contact';
+    if (itemPath === '/contact') return location.pathname === '/contact' || location.pathname === '/kontakt';
+    return location.pathname === itemPath;
+  };
+
   return (
     <nav className="fixed top-0 left-0 right-0 bg-mint border-b-4 border-teal z-50">
       <div className="container mx-auto px-6 py-3">
         <div className="flex justify-between items-center">
           <Link
-            to="/"
+            to={language === 'est' ? '/' : '/home'}
             className="hover:scale-105 transition-transform"
           >
             <img
@@ -44,7 +63,7 @@ export default function Navigation({ language, setLanguage }: NavigationProps) {
                 to={item.path}
                 onClick={() => setMobileMenuOpen(false)}
                 className={`px-5 py-2 rounded-full font-bold text-sm transition-all ${
-                  location.pathname === item.path
+                  isActivePath(item.path)
                     ? 'bg-pink-light text-teal border-2 border-teal'
                     : 'bg-white text-teal hover:bg-lemon border-2 border-transparent'
                 }`}
@@ -54,7 +73,7 @@ export default function Navigation({ language, setLanguage }: NavigationProps) {
             ))}
 
             <Link
-              to="/contact"
+              to={language === 'est' ? '/kontakt' : '/contact'}
               className="bg-lemon text-teal px-6 py-2 rounded-full font-black text-sm border-4 border-teal shadow-md hover:shadow-lg transition-all"
             >
               {t.nav.contact}
@@ -100,7 +119,7 @@ export default function Navigation({ language, setLanguage }: NavigationProps) {
                 to={item.path}
                 onClick={() => setMobileMenuOpen(false)}
                 className={`block w-full text-left py-3 px-4 rounded-2xl font-bold mb-2 transition-all ${
-                  location.pathname === item.path
+                  isActivePath(item.path)
                     ? 'bg-lemon text-teal border-2 border-teal'
                     : 'bg-white text-teal hover:bg-pink-light'
                 }`}
