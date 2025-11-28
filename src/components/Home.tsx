@@ -1,12 +1,12 @@
 import { ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { translations } from '../translations';
 
 interface HomeProps {
   language: 'est' | 'eng';
-  setCurrentPage: (page: string) => void;
 }
 
-export default function Home({ language, setCurrentPage }: HomeProps) {
+export default function Home({ language }: HomeProps) {
   const t = translations[language];
 
   return (
@@ -18,19 +18,19 @@ export default function Home({ language, setCurrentPage }: HomeProps) {
               {t.hero.title}
             </h1>
             <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center px-4">
-              <button
-                onClick={() => setCurrentPage('services')}
+              <Link
+                to="/services"
                 className="bg-mint text-teal px-8 sm:px-12 py-4 sm:py-6 rounded-full font-black text-lg sm:text-xl btn-chunky inline-flex items-center justify-center gap-3"
               >
                 {t.hero.cta1}
                 <ArrowRight size={24} className="sm:w-7 sm:h-7" strokeWidth={3} />
-              </button>
-              <button
-                onClick={() => setCurrentPage('contact')}
+              </Link>
+              <Link
+                to="/contact"
                 className="bg-pink-light text-teal px-8 sm:px-12 py-4 sm:py-6 rounded-full font-black text-lg sm:text-xl btn-chunky"
               >
                 {t.hero.cta2}
-              </button>
+              </Link>
             </div>
           </div>
         </div>

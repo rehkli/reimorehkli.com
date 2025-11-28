@@ -3,10 +3,9 @@ import { translations } from '../translations';
 
 interface ServicesProps {
   language: 'est' | 'eng';
-  setCurrentPage: (page: string) => void;
 }
 
-export default function Services({ language, setCurrentPage }: ServicesProps) {
+export default function Services({ language }: ServicesProps) {
   const t = translations[language].services;
 
   const services = [

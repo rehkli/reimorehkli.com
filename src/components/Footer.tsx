@@ -1,19 +1,19 @@
+import { Link } from 'react-router-dom';
 import { translations } from '../translations';
 
 interface FooterProps {
   language: 'est' | 'eng';
-  setCurrentPage: (page: string) => void;
 }
 
-export default function Footer({ language, setCurrentPage }: FooterProps) {
+export default function Footer({ language }: FooterProps) {
   const t = translations[language];
 
   const navItems = [
-    { id: 'home', label: t.nav.home },
-    { id: 'about', label: t.nav.about },
-    { id: 'services', label: t.nav.services },
-    { id: 'contact', label: t.nav.contact },
-    { id: 'agenda', label: t.nav.agenda }
+    { id: 'home', path: '/', label: t.nav.home },
+    { id: 'about', path: '/about', label: t.nav.about },
+    { id: 'services', path: '/services', label: t.nav.services },
+    { id: 'contact', path: '/contact', label: t.nav.contact },
+    { id: 'agenda', path: '/agenda', label: t.nav.agenda }
   ];
 
   return (
@@ -35,15 +35,12 @@ export default function Footer({ language, setCurrentPage }: FooterProps) {
             <ul className="space-y-1.5 sm:space-y-2">
               {navItems.map(item => (
                 <li key={item.id}>
-                  <button
-                    onClick={() => {
-                      setCurrentPage(item.id);
-                      window.scrollTo(0, 0);
-                    }}
+                  <Link
+                    to={item.path}
                     className="text-white hover:text-lemon transition-colors font-semibold text-sm sm:text-base"
                   >
                     {item.label}
-                  </button>
+                  </Link>
                 </li>
               ))}
             </ul>
