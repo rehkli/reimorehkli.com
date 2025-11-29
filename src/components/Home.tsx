@@ -19,14 +19,14 @@ export default function Home({ language }: HomeProps) {
             </h1>
             <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center px-4">
               <Link
-                to="/services"
+                to={language === 'est' ? '/teenused' : '/services'}
                 className="bg-mint text-teal px-8 sm:px-12 py-4 sm:py-6 rounded-full font-black text-lg sm:text-xl btn-chunky inline-flex items-center justify-center gap-3"
               >
                 {t.hero.cta1}
                 <ArrowRight size={24} className="sm:w-7 sm:h-7" strokeWidth={3} />
               </Link>
               <Link
-                to="/contact"
+                to={language === 'est' ? '/kontakt' : '/contact'}
                 className="bg-pink-light text-teal px-8 sm:px-12 py-4 sm:py-6 rounded-full font-black text-lg sm:text-xl btn-chunky"
               >
                 {t.hero.cta2}
