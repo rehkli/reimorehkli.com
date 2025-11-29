@@ -19,7 +19,7 @@ export default function Footer({ language }: FooterProps) {
     { id: 'about', path: '/about', label: t.nav.about },
     { id: 'services', path: '/services', label: t.nav.services },
     { id: 'contact', path: '/contact', label: t.nav.contact },
-    { id: 'agenda', path: '/agenda', label: t.nav.agenda }
+    { id: 'agenda', path: '/create-agenda', label: t.nav.agenda }
   ];
 
   return (

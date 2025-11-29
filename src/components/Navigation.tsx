@@ -24,7 +24,7 @@ export default function Navigation({ language, setLanguage }: NavigationProps) {
     { id: 'about', path: '/about', label: t.nav.about },
     { id: 'services', path: '/services', label: t.nav.services },
     { id: 'contact', path: '/contact', label: t.nav.contact },
-    { id: 'agenda', path: '/agenda', label: t.nav.agenda }
+    { id: 'agenda', path: '/create-agenda', label: t.nav.agenda }
   ];
 
   const isActivePath = (itemPath: string) => {
@@ -37,6 +37,8 @@ export default function Navigation({ language, setLanguage }: NavigationProps) {
     if (itemPath === '/services') return location.pathname === '/services' || location.pathname === '/teenused';
     if (itemPath === '/kontakt') return location.pathname === '/kontakt' || location.pathname === '/contact';
     if (itemPath === '/contact') return location.pathname === '/contact' || location.pathname === '/kontakt';
+    if (itemPath === '/agenda') return location.pathname === '/agenda' || location.pathname === '/create-agenda';
+    if (itemPath === '/create-agenda') return location.pathname === '/create-agenda' || location.pathname === '/agenda';
     return location.pathname === itemPath;
   };
 

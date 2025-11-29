@@ -28,7 +28,8 @@ const routeToLanguageMap: { [key: string]: 'est' | 'eng' } = {
   '/about': 'eng',
   '/services': 'eng',
   '/contact': 'eng',
-  '/agenda': 'est'
+  '/agenda': 'est',
+  '/create-agenda': 'eng'
 };
 
 function AppContent() {
@@ -54,11 +55,13 @@ function AppContent() {
       else if (currentPath === '/about') newPath = '/minust';
       else if (currentPath === '/services') newPath = '/teenused';
       else if (currentPath === '/contact') newPath = '/kontakt';
+      else if (currentPath === '/create-agenda') newPath = '/agenda';
     } else {
       if (currentPath === '/' || currentPath === '/avaleht') newPath = '/home';
       else if (currentPath === '/minust') newPath = '/about';
       else if (currentPath === '/teenused') newPath = '/services';
       else if (currentPath === '/kontakt') newPath = '/contact';
+      else if (currentPath === '/agenda') newPath = '/create-agenda';
     }
 
     if (newPath !== currentPath) {
@@ -89,6 +92,7 @@ function AppContent() {
         <Route path="/contact" element={<Contact language={language} />} />
 
         <Route path="/agenda" element={<AgendaCreator language={language} />} />
+        <Route path="/create-agenda" element={<AgendaCreator language={language} />} />
       </Routes>
 
       <Footer language={language} />
