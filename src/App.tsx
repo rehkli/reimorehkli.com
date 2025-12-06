@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, useLocation, useNavigate, Navigate } from 'react-router-dom';
+import { AuthProvider } from './contexts/AuthContext';
 import Navigation from './components/Navigation';
 import Home from './components/Home';
 import About from './components/About';
@@ -7,6 +8,18 @@ import Services from './components/Services';
 import Contact from './components/Contact';
 import AgendaCreator from './components/AgendaCreator';
 import Footer from './components/Footer';
+import Login from './components/admin/Login';
+import ProtectedRoute from './components/admin/ProtectedRoute';
+import AdminLayout from './components/admin/AdminLayout';
+import Dashboard from './components/admin/Dashboard';
+import PagesList from './components/admin/PagesList';
+import PageEditor from './components/admin/PageEditor';
+import BlogList from './components/admin/BlogList';
+import BlogEditor from './components/admin/BlogEditor';
+import MediaLibrary from './components/admin/MediaLibrary';
+import DynamicPage from './components/DynamicPage';
+import BlogListPublic from './components/BlogList';
+import BlogPost from './components/BlogPost';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -24,10 +37,12 @@ const routeToLanguageMap: { [key: string]: 'est' | 'eng' } = {
   '/minust': 'est',
   '/teenused': 'est',
   '/kontakt': 'est',
+  '/blogi': 'est',
   '/home': 'eng',
   '/about': 'eng',
   '/services': 'eng',
   '/contact': 'eng',
+  '/blog': 'eng',
   '/agenda': 'est',
   '/create-agenda': 'eng'
 };
@@ -38,7 +53,14 @@ function AppContent() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const detectedLang = routeToLanguageMap[location.pathname];
+    const path = location.pathname;
+    let detectedLang = routeToLanguageMap[path];
+
+    if (!detectedLang) {
+      if (path.startsWith('/blogi/')) detectedLang = 'est';
+      else if (path.startsWith('/blog/')) detectedLang = 'eng';
+    }
+
     if (detectedLang && detectedLang !== language) {
       setLanguage(detectedLang);
     }
@@ -69,6 +91,61 @@ function AppContent() {
     }
   };
 
+  const isAdminRoute = location.pathname.startsWith('/admin');
+
+  if (isAdminRoute) {
+    return (
+      <div className="min-h-screen">
+        <ScrollToTop />
+        <Routes>
+          <Route path="/admin/login" element={<Login />} />
+          <Route path="/admin" element={
+            <ProtectedRoute>
+              <AdminLayout>
+                <Dashboard />
+              </AdminLayout>
+            </ProtectedRoute>
+          } />
+          <Route path="/admin/pages" element={
+            <ProtectedRoute>
+              <AdminLayout>
+                <PagesList />
+              </AdminLayout>
+            </ProtectedRoute>
+          } />
+          <Route path="/admin/pages/:id" element={
+            <ProtectedRoute>
+              <AdminLayout>
+                <PageEditor />
+              </AdminLayout>
+            </ProtectedRoute>
+          } />
+          <Route path="/admin/blog" element={
+            <ProtectedRoute>
+              <AdminLayout>
+                <BlogList />
+              </AdminLayout>
+            </ProtectedRoute>
+          } />
+          <Route path="/admin/blog/:id" element={
+            <ProtectedRoute>
+              <AdminLayout>
+                <BlogEditor />
+              </AdminLayout>
+            </ProtectedRoute>
+          } />
+          <Route path="/admin/media" element={
+            <ProtectedRoute>
+              <AdminLayout>
+                <MediaLibrary />
+              </AdminLayout>
+            </ProtectedRoute>
+          } />
+        </Routes>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-white">
       <ScrollToTop />
@@ -93,6 +170,13 @@ function AppContent() {
 
         <Route path="/agenda" element={<AgendaCreator language={language} />} />
         <Route path="/create-agenda" element={<AgendaCreator language={language} />} />
+
+        <Route path="/blogi" element={<BlogListPublic language={language} />} />
+        <Route path="/blog" element={<BlogListPublic language={language} />} />
+        <Route path="/blogi/:slug" element={<BlogPost language={language} />} />
+        <Route path="/blog/:slug" element={<BlogPost language={language} />} />
+
+        <Route path="/:slug" element={<DynamicPage language={language} />} />
       </Routes>
 
       <Footer language={language} />
@@ -103,7 +187,9 @@ function AppContent() {
 function App() {
   return (
     <BrowserRouter>
-      <AppContent />
+      <AuthProvider>
+        <AppContent />
+      </AuthProvider>
     </BrowserRouter>
   );
 }

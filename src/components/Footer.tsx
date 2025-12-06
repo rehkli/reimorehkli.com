@@ -1,14 +1,36 @@
 import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import { translations } from '../translations';
+import { getPublishedPages, getPublishedBlogPosts } from '../lib/supabase';
+import type { Page } from '../lib/supabase';
 
 interface FooterProps {
   language: 'est' | 'eng';
 }
 
 export default function Footer({ language }: FooterProps) {
+  const [dynamicPages, setDynamicPages] = useState<Page[]>([]);
+  const [hasBlogPosts, setHasBlogPosts] = useState(false);
   const t = translations[language];
 
-  const navItems = language === 'est' ? [
+  useEffect(() => {
+    loadDynamicContent();
+  }, []);
+
+  const loadDynamicContent = async () => {
+    try {
+      const [pages, posts] = await Promise.all([
+        getPublishedPages(),
+        getPublishedBlogPosts(1)
+      ]);
+      setDynamicPages(pages.filter(p => p.show_in_footer));
+      setHasBlogPosts(posts.length > 0);
+    } catch (error) {
+      console.error('Failed to load dynamic content:', error);
+    }
+  };
+
+  const staticNavItems = language === 'est' ? [
     { id: 'home', path: '/', label: t.nav.home },
     { id: 'about', path: '/minust', label: t.nav.about },
     { id: 'services', path: '/teenused', label: t.nav.services },
@@ -21,6 +43,20 @@ export default function Footer({ language }: FooterProps) {
     { id: 'contact', path: '/contact', label: t.nav.contact },
     { id: 'agenda', path: '/create-agenda', label: t.nav.agenda }
   ];
+
+  const dynamicNavItems = dynamicPages.map(page => ({
+    id: `page-${page.id}`,
+    path: `/${language === 'est' ? page.slug_est : page.slug_eng}`,
+    label: language === 'est' ? page.title_est : page.title_eng
+  }));
+
+  const blogItem = hasBlogPosts ? [{
+    id: 'blog',
+    path: language === 'est' ? '/blogi' : '/blog',
+    label: language === 'est' ? 'Blogi' : 'Blog'
+  }] : [];
+
+  const navItems = [...staticNavItems, ...dynamicNavItems, ...blogItem];
 
   return (
     <footer className="bg-teal text-white py-8 sm:py-12 border-t-4 border-gray-900">

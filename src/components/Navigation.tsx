@@ -1,7 +1,9 @@
 import { Menu, X } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { translations } from '../translations';
+import { getPublishedPages } from '../lib/supabase';
+import type { Page } from '../lib/supabase';
 
 interface NavigationProps {
   language: 'est' | 'eng';
@@ -10,10 +12,24 @@ interface NavigationProps {
 
 export default function Navigation({ language, setLanguage }: NavigationProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [dynamicPages, setDynamicPages] = useState<Page[]>([]);
   const location = useLocation();
   const t = translations[language];
 
-  const navItems = language === 'est' ? [
+  useEffect(() => {
+    loadDynamicPages();
+  }, []);
+
+  const loadDynamicPages = async () => {
+    try {
+      const pages = await getPublishedPages();
+      setDynamicPages(pages.filter(p => p.show_in_menu));
+    } catch (error) {
+      console.error('Failed to load dynamic pages:', error);
+    }
+  };
+
+  const staticNavItems = language === 'est' ? [
     { id: 'home', path: '/', label: t.nav.home },
     { id: 'about', path: '/minust', label: t.nav.about },
     { id: 'services', path: '/teenused', label: t.nav.services },
@@ -26,6 +42,14 @@ export default function Navigation({ language, setLanguage }: NavigationProps) {
     { id: 'contact', path: '/contact', label: t.nav.contact },
     { id: 'agenda', path: '/create-agenda', label: t.nav.agenda }
   ];
+
+  const dynamicNavItems = dynamicPages.map(page => ({
+    id: `page-${page.id}`,
+    path: `/${language === 'est' ? page.slug_est : page.slug_eng}`,
+    label: language === 'est' ? page.title_est : page.title_eng
+  }));
+
+  const navItems = [...staticNavItems, ...dynamicNavItems];
 
   const isActivePath = (itemPath: string) => {
     if (itemPath === '/' || itemPath === '/home') {

@@ -123,3 +123,118 @@ h1, h2, h3, h4, h5, h6 {
     box-shadow: 0 8px 0 #0d2620;
   }
 }
+
+.text-editor .ql-toolbar {
+  border: 2px solid #2C6E6B !important;
+  border-radius: 16px 16px 0 0 !important;
+  background-color: #C8F3E6 !important;
+}
+
+.text-editor .ql-container {
+  border: 2px solid #2C6E6B !important;
+  border-top: none !important;
+  border-radius: 0 0 16px 16px !important;
+  min-height: 200px;
+  font-family: 'Inter', sans-serif !important;
+  font-size: 16px !important;
+}
+
+.text-editor .ql-editor {
+  min-height: 200px;
+  color: #1a4d3f;
+  font-weight: 600;
+}
+
+.text-editor .ql-editor.ql-blank::before {
+  color: #2C6E6B;
+  opacity: 0.6;
+  font-style: normal;
+  font-weight: 600;
+}
+
+.text-editor .ql-toolbar button {
+  color: #1a4d3f !important;
+}
+
+.text-editor .ql-toolbar button:hover {
+  color: #1a4d3f !important;
+  background-color: #FFF59D !important;
+}
+
+.text-editor .ql-toolbar button.ql-active {
+  color: #1a4d3f !important;
+  background-color: #FFF59D !important;
+}
+
+.text-editor .ql-stroke {
+  stroke: #1a4d3f !important;
+}
+
+.text-editor .ql-fill {
+  fill: #1a4d3f !important;
+}
+
+.prose {
+  color: #1a4d3f;
+}
+
+.prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6 {
+  font-family: 'Comfortaa', sans-serif;
+  font-weight: 900;
+  color: #1a4d3f;
+  margin-top: 1.5em;
+  margin-bottom: 0.75em;
+}
+
+.prose h1 {
+  font-size: 2.25em;
+}
+
+.prose h2 {
+  font-size: 1.875em;
+}
+
+.prose h3 {
+  font-size: 1.5em;
+}
+
+.prose p {
+  margin-bottom: 1.25em;
+  line-height: 1.75;
+  color: #1a4d3f;
+  font-weight: 600;
+}
+
+.prose a {
+  color: #1a4d3f;
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+.prose a:hover {
+  color: #2C6E6B;
+}
+
+.prose strong {
+  font-weight: 900;
+  color: #1a4d3f;
+}
+
+.prose ul, .prose ol {
+  margin-bottom: 1.25em;
+  padding-left: 1.5em;
+}
+
+.prose li {
+  margin-bottom: 0.5em;
+  color: #1a4d3f;
+  font-weight: 600;
+}
+
+.prose blockquote {
+  border-left: 4px solid #2C6E6B;
+  padding-left: 1em;
+  margin: 1.5em 0;
+  font-style: italic;
+  color: #1a4d3f;
+}
